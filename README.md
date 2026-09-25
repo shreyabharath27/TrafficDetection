@@ -1,73 +1,95 @@
-Traffic Detection for Intersection Safety
+# Intersection Safety Traffic Detector
 
-This project uses a pretrained Ultralytics YOLO object-detection model to analyze traffic scenes at urban intersections. It detects relevant road users, including people, bicycles, cars, buses, and trucks, and produces annotated images containing bounding boxes, class labels, and confidence scores.
+This project uses a pretrained Ultralytics YOLO object detector to analyze traffic scenes at urban intersections. The detector identifies road users, draws bounding boxes, displays class labels and confidence scores, and counts detected objects.
 
-The goal is to explore how object detection can support pedestrian and cyclist safety analysis. Detection counts are used to identify scenes where vehicles and vulnerable road users appear together and to calculate a simple potential conflict-exposure score.
+The project focuses on interactions between vehicles and vulnerable road users such as pedestrians and cyclists.
 
-Project Features
+## Detected Classes
 
-- Processes 24 intersection images with different lighting conditions, viewpoints, traffic densities, object sizes, and levels of occlusion.
+- Person
+- Bicycle
+- Car
+- Bus
+- Truck
 
-- Draws bounding boxes with class labels and confidence scores.
+## Dataset
 
-- Counts detections for each relevant road-user class.
+The test dataset contains 24 publicly available intersection images with a variety of:
 
-- Saves annotated images and CSV files containing detection results.
+- Lighting and weather conditions
+- Camera viewpoints
+- Object sizes and distances
+- Crowded and uncrowded scenes
+- Partially occluded objects
 
-- Compares confidence thresholds of 0.20, 0.50, and 0.80.
+## Project Features
 
-- Experiments with multiple Non-Maximum Suppression (NMS) IoU thresholds.
+- Processes multiple traffic images with a pretrained YOLO model
+- Draws bounding boxes around detected objects
+- Displays object classes and confidence scores
+- Counts relevant object classes in each image
+- Saves annotated images and detection results
+- Compares confidence thresholds of 0.20, 0.50, and 0.80
+- Compares multiple Non-Maximum Suppression IoU thresholds
+- Produces an application-level intersection safety analysis
 
-- Calculates an application-level potential conflict-exposure score.
+## Repository Files
 
-Application-Level Analysis
-For each image, the program groups detections as follows:
+| File or folder | Description |
+| --- | --- |
+| `intersection_images/` | Original test images |
+| `outputs/` | Annotated images, labels, and CSV results |
+| `nms_outputs/` | Images and results from the NMS experiments |
+| `detect.py` | Runs detection, draws boxes, and counts objects |
+| `nms_experiments.py` | Tests different NMS IoU thresholds |
+| `application_analysis.py` | Calculates the potential conflict-exposure score |
+| `yolo26n.pt` | Pretrained YOLO model weights |
 
-- Vehicles: cars, trucks, and buses
+## Installation
 
-- Vulnerable-road-user detections: people and bicycles
+Install the required Python packages:
+
+```bash
+pip install ultralytics opencv-python numpy
+```
+
+## Running the Project
+
+Run the main detector:
+
+```bash
+python detect.py
+```
+
+Run the NMS experiments:
+
+```bash
+python nms_experiments.py
+```
+
+Run the application-level analysis:
+
+```bash
+python application_analysis.py
+```
+
+Generated images and detection data are saved in the `outputs/` and `nms_outputs/` folders.
+
+## Application-Level Analysis
+
+The analysis groups detections into two categories:
+
+- **Vehicles:** cars, trucks, and buses
+- **Vulnerable-road-user detections:** people and bicycles
 
 The potential conflict-exposure score is calculated as:
 
-- vehicles * (people + bicycles)
+```text
+vehicles x (people + bicycles)
+```
 
-A higher score indicates that more vehicle and vulnerable-road-user detections appear in the same scene. This score measures potential exposure only; it does not predict accidents because the detector does not estimate speed, direction, or real-world distance.
+A higher score means that more vehicles and vulnerable-road-user detections appear in the same image. The score identifies scenes that may deserve additional safety monitoring, but it does not predict accidents.
 
-Repository Structure
+## Limitations
 
-TrafficDetection/
-├── intersection_images/      # Input traffic images
-├── outputs/                  # Annotated images, labels, and CSV results
-├── nms_outputs/              # Results from the NMS experiments
-├── detect.py                 # Detection, visualization, and class counting
-├── nms_experiments.py        # NMS IoU-threshold experiments
-├── application_analysis.py   # Potential conflict-exposure analysis
-└── yolo26n.pt                # Pretrained YOLO model weights
-
-Requirements
-
-- Python 3.10 or newer
-
-- Ultralytics
-
-- OpenCV
-
-- NumPy
-
-Install the dependencies with:
-
-pip install ultralytics opencv-python numpy
-
-Running the Project
-
-From the repository directory, run:
-
-python detect.py
-python nms_experiments.py
-python application_analysis.py
-
-The generated annotated images and detection data are saved in the outputs/ and nms_outputs/ directories.
-
-Limitations
-
-The detector may miss small, distant, crowded, or partially occluded objects. It may also confuse visually similar classes, such as cars and trucks. In addition, a cyclist may be represented by both a person detection and a bicycle detection, so the application-level score should not be interpreted as a count of unique individuals.
+The detector may miss objects that are small, distant, crowded, or partially occluded. It may also confuse visually similar classes, such as cars and trucks. A cyclist can produce both a person detection and a bicycle detection, so the application score should not be interpreted as the number of unique individuals.
