@@ -1,0 +1,4 @@
+run_name,nms_iou_threshold,processed_images,total_detections
+small_iou_010,0.1,24,253
+normal_iou_045,0.45,24,293
+large_iou_095,0.95,24,870
