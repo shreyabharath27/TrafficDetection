@@ -6,22 +6,22 @@ The goal is to explore how object detection can support pedestrian and cyclist s
 
 Project Features
 
-Processes 24 intersection images with different lighting conditions, viewpoints, traffic densities, object sizes, and levels of occlusion.
+- Processes 24 intersection images with different lighting conditions, viewpoints, traffic densities, object sizes, and levels of occlusion.
 
-Draws bounding boxes with class labels and confidence scores.
+- Draws bounding boxes with class labels and confidence scores.
 
-Counts detections for each relevant road-user class.
+- Counts detections for each relevant road-user class.
 
-Saves annotated images and CSV files containing detection results.
+- Saves annotated images and CSV files containing detection results.
 
-Compares confidence thresholds of 0.20, 0.50, and 0.80.
+- Compares confidence thresholds of 0.20, 0.50, and 0.80.
 
-Experiments with multiple Non-Maximum Suppression (NMS) IoU thresholds.
+- Experiments with multiple Non-Maximum Suppression (NMS) IoU thresholds.
 
-Calculates an application-level potential conflict-exposure score.
+- Calculates an application-level potential conflict-exposure score.
 
-Application-Level Analysis
-
+**Application-Level Analysis
+**
 For each image, the program groups detections as follows:
 
 Vehicles: cars, trucks, and buses
