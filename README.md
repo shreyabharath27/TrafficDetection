@@ -20,17 +20,16 @@ Project Features
 
 - Calculates an application-level potential conflict-exposure score.
 
-**Application-Level Analysis
-**
+Application-Level Analysis
 For each image, the program groups detections as follows:
 
-Vehicles: cars, trucks, and buses
+- Vehicles: cars, trucks, and buses
 
-Vulnerable-road-user detections: people and bicycles
+- Vulnerable-road-user detections: people and bicycles
 
 The potential conflict-exposure score is calculated as:
 
-vehicles * (people + bicycles)
+- vehicles * (people + bicycles)
 
 A higher score indicates that more vehicle and vulnerable-road-user detections appear in the same scene. This score measures potential exposure only; it does not predict accidents because the detector does not estimate speed, direction, or real-world distance.
 
@@ -47,13 +46,13 @@ TrafficDetection/
 
 Requirements
 
-Python 3.10 or newer
+- Python 3.10 or newer
 
-Ultralytics
+- Ultralytics
 
-OpenCV
+- OpenCV
 
-NumPy
+- NumPy
 
 Install the dependencies with:
 
